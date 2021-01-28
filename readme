@@ -1,0 +1,124 @@
+Implementati un website(magazin online) 
+Trebuie sa contina urmatoarele functionalitati
+1 - Pagina logare
+2 - Pagina inregistrare
+3 - Pagina produse
+4 - Pagina produs cu detalii + reviews
+5 - Pagina profil, sa existe posibilitatea de a modifica parola, modifica numele
+6 - Sa se poata deloga din aplicatie
+Codul trebuie scris in limba engleza, html-ul poate fi si in romana.
+
+Structura proiect
+1 - pages contin toate html-urile
+2 - script/models contin toate clasele
+3 - script/services contine business logic pentru fiecare model(inlocuieste manager si store)
+4 - style contine css-urile
+
+Acceptance criteria
+--Menu bar
+Ca utilizator sa pot avea o bara de navigatie cu login, register cand nu sunt logat si, products, profile, logout cand sunt logat
+
+--Pagina inregistrare
+Ca utilizator sa pot sa imi creez un profil nou
+ - pagina html cu 3 inputuri si 1 buton
+ - onclick sa ma duca la pagina de login
+ - logica sa existe in AuthenticationService
+
+--Pagina logare
+Ca utilizator sa pot sa ma loghez pe website dupa ce mi-am creat cont
+ - o pagina cu 2 inputuri si buton
+ - onclick sa ma duca la pagina de produse
+ - logica sa existe in AuthenticationService
+
+--Pagina produse
+Ca utilizator sa pot vizualiza toate produsele de pe site
+ - pagina sa contina o lista de produse
+ - sa se poata adauga un produs nou
+ - logica sa existe in ProductService
+
+--Pagina Profil
+Ca utilizator sa am posibilitatea sa am o pagina unde imi pot modifica numele, parola si sa imi sterg profilul
+ -- pagina sa contina campuri pentru cele mai sus si butoane pentru modificare profil
+
+--logout
+Ca utilizator atunci cand sunt logat si vreau sa ma deloghez onclick sa ma duca la pagina de login
+
+
+Cum incep sa dezvolt un proiect tips&trics
+
+- Incep cu un text descriere ce trebuie sa faca un proiect
+- Impart functionalitatea in bucati mai mici
+- Pentru fiecare bucata de functionalitate identific ce cod trebuie scris atat pe html cat si css si js
+- Incep cu pagina HTML care este goala momentan
+- Dupa ce adaug elementele HTML si evenimentele
+- Identific unde o sa fie apelata functia respectiva
+- Creez o pagina main.js care este punctul de legatura intre HTML si js, in functii se colecteaza date din html si se trimit la servicii
+- Main.js contine metodele care sunt apelate din HTML
+- Fiecare metoda (login(), register(),addProduct()) care sunt apelate din HTML onclick, onload
+sunt adaugate in main.js, in interiorul la fiecare metoda apelez un serviciu care este responsabil pentru 
+functionalitatea respectiva
+- sus la inceput de main.js cream serviciile de care avem nevoie
+
+main.js
+============
+var authService = new AuthenticationService();
+var productService  = new ProductService();
+
+function login(){
+    //colectam datele din HTML 
+    authService.login(user, pass);
+    redirect(productPage);
+}
+
+function AddProduct(){
+    //colecatam datele din html
+    productService.AddProduct(name, description, price);
+    refreshPage();
+}
+
+etc...
+============
+
+AuthenticationService.js
+============
+
+class AuthenticationService{
+    register() {
+        // decidem daca folosim o lista locala, sau apelam un backend
+    },
+    login(){
+        // decidem daca folosim o lista locala, sau apelam un backend
+    }
+}
+============
+
+
+login.html contine elementele html si evenimentele
+main.js colecteaza datele din html si apeleaza un serviciu responsabil de logica
+authenticationService.js aici exista metoda cu logica respectiva
+
+
+products.html
+main.js
+productService.js
+
+Register step by step
+1 - adaugam inputuri si butoane in html, recomandarea este sa folositi html clasic pentru inceput
+2 - adaugam un eveniment pe buton care apeleaza register()
+3 - daca nu avem o pagina main.js o cream
+4 - adaugam metoda register() in main.js
+5 - colectam datele din inputuri cu ajutorul la jquery
+6 - ca sa putem folosi jquery adaugam linkul in pagina
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+7- adaugam referinta in pagina html register la main.js
+    <script src="script/main.js"></script>
+    link-ul la Jquery trebuie sa fie primul pentru ca in interor la main.js folosim functionalitati din Jquery
+8 - folosim var name = $("#registerNameId").val();
+9 - dupa ce avem toate datele necesare pentru logare
+10 - apelam serviciul care primeste datele acestea ca parametru
+11 - putem sa ne dam seama ca register face parte din authenticationService
+12 - cream sus de tot in main.js obiectul authenticationService
+13 - cream o clasa AuthenticationService care o sa contina si metoda register(name, email, pass)
+14 - avem nevoie si de o clasa model pentru utilizator, adaugam clasa
+15 - dupa ce adaugam utilizatorul il trimitem pe alta pagina
+16 - dupa ce am facut o implementare trebuie sa testam ca merge cu debuggerul sau console.log();
