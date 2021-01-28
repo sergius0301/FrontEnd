@@ -142,4 +142,5 @@ function sendMessage(){
 function AddRating(productId, rating){
     var product = httpService.getProductById(productId);
     httpService.addRating(product, rating);
+    //hello
 }
